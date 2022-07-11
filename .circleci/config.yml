@@ -1,0 +1,40 @@
+version: 2.1
+
+orbs:
+  docker-image-extend: bigbite/docker-image-extend@dev:alpha
+
+parameters:
+  docker_image_build:
+    type: boolean
+    default: false
+  docker_image_repo:
+    type: string
+    default: 'false'
+  docker_image_tag:
+    type: string
+    default: 'false'
+  docker_image_args:
+    type: string
+    default: 'false'
+
+workflows:
+  workflow:
+    jobs:
+      - docker-image-extend/prepare:
+          docker_repo: 'bigbite/ci-orb-project'
+          docker_image_build: '<< pipeline.parameters.docker_image_build >>'
+          context: bigbite
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+      - docker-image-extend/build:
+          docker_image_repo: '<< pipeline.parameters.docker_image_repo >>'
+          docker_image_tag: '<< pipeline.parameters.docker_image_tag >>'
+          docker_image_args: '<< pipeline.parameters.docker_image_args >>'
+          docker_image_build: '<< pipeline.parameters.docker_image_build >>'
+          context: bigbite
+          filters:
+            tags:
+              ignore: /.*/
