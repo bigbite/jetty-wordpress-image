@@ -21,7 +21,7 @@ workflows:
   workflow:
     jobs:
       - docker-image-extend/prepare:
-          docker_repo: 'bigbite/ci-orb-project'
+          docker_repo: 'bigbite/jetty-wordpress-image'
           docker_image_build: '<< pipeline.parameters.docker_image_build >>'
           context: bigbite
           filters:
