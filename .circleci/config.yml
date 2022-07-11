@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  docker-image-extend: bigbite/docker-image-extend@dev:alpha
+  docker-image-extend: bigbite/docker-image-extend@0.0.2
 
 parameters:
   docker_image_build:
