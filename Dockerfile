@@ -13,4 +13,4 @@ ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/do
 
 # Install PHP extensions.
 RUN chmod +x /usr/local/bin/install-php-extensions && \
-  install-php-extensions memcache memcached
+  install-php-extensions memcache memcached xdebug
