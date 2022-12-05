@@ -2,12 +2,11 @@ ARG WORDPRESS_IMAGE
 
 FROM wordpress:${WORDPRESS_IMAGE}
 
-# Installs mhsendmail for Mailhog.
-RUN curl --location --output /usr/local/bin/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 && \
-  chmod +x /usr/local/bin/mhsendmail
+# Install Mailpit.
+RUN ["/bin/bash", "-c", "bash < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)"]
 
-# Configures sendmail_path and sends to mail container.
-RUN echo 'sendmail_path="/usr/local/bin/mhsendmail --smtp-addr=mail:1025"' > /usr/local/etc/php/conf.d/mailhog.ini
+# Configure sendmail to use Mailpit.
+RUN echo 'sendmail_path="/usr/local/bin/mailpit sendmail --smtp-addr=mail:1025"' > /usr/local/etc/php/conf.d/mail.ini
 
 # Easy installation of PHP extensions in official PHP Docker images: https://github.com/mlocati/docker-php-extension-installer/.
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
