@@ -18,7 +18,7 @@ parameters:
     default: 'false'
 
 jobs:
-  build:
+  build-docker-image:
     steps:
       - run:
           name: Create multiarch build
@@ -36,18 +36,10 @@ workflows:
               ignore: /.*/
             tags:
               only: /.*/
-      - build:
+      - build-docker-image:
+          docker_repo: 'bigbite/jetty-wordpress-image'
+          docker_image_build: '<< pipeline.parameters.docker_image_build >>'
           context: bigbite
           filters:
             tags:
               ignore: /.*/
-
-      # - docker-image-extend/build:
-      #     docker_image_repo: '<< pipeline.parameters.docker_image_repo >>'
-      #     docker_image_tag: '<< pipeline.parameters.docker_image_tag >>'
-      #     docker_image_args: '<< pipeline.parameters.docker_image_args >>'
-      #     docker_image_build: '<< pipeline.parameters.docker_image_build >>'
-      #     context: bigbite
-      #     filters:
-      #       tags:
-      #         ignore: /.*/
