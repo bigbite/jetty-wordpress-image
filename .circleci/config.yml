@@ -39,8 +39,6 @@ workflows:
             tags:
               only: /.*/
       - build-docker-image:
-          docker_repo: 'bigbite/jetty-wordpress-image'
-          docker_image_build: '<< pipeline.parameters.docker_image_build >>'
           context: bigbite
           filters:
             tags:
