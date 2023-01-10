@@ -17,6 +17,18 @@ parameters:
     type: string
     default: 'false'
 
+jobs:
+  build:
+    steps:
+      - run:
+          name: Create multiarch build
+          command: |
+            docker buildx build \
+              --push \
+              --platform linux/amd64,linux/arm64 \
+              --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> \
+              .
+
 workflows:
   workflow:
     jobs:
@@ -29,14 +41,7 @@ workflows:
               ignore: /.*/
             tags:
               only: /.*/
-      - run:
-          name: Create multiarch build
-          command: |
-            docker buildx build \
-              --push \
-              --platform linux/amd64,linux/arm64 \
-              --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> \
-              .
+      - build:
           context: bigbite
           filters:
             tags:
