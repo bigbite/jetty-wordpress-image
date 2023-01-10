@@ -22,12 +22,7 @@ jobs:
     steps:
       - run:
           name: Create multiarch build
-          command: |
-            docker buildx build \
-              --push \
-              --platform linux/amd64,linux/arm64 \
-              --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> \
-              .
+          command: docker buildx build --push --platform linux/amd64,linux/arm64 --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> .
 
 workflows:
   workflow:
