@@ -16,22 +16,6 @@ parameters:
   docker_image_args:
     type: string
     default: 'false'
-  docker_repo:
-    type: string
-    default: "bigbite/name"
-    description: "Docker Hub Repository"
-  docker_tag_suffix:
-    type: string
-    default: ""
-    description: "Docker tag suffix -dev"
-  circleci_api_token:
-    type: env_var_name
-    default: CIRCLECI_API_TOKEN
-    description: "CircleCI API Token"
-  branch:
-    type: string
-    default: "master"
-    description: "Main Branch"
 
 jobs:
   build-docker-image:
@@ -42,7 +26,10 @@ jobs:
           version: 20.10.14
       - run:
           name: Create multiarch build
-          command: docker buildx build --push --platform linux/amd64,linux/arm64 --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> .
+          command: |
+            docker context create cimg
+            docker buildx create --use cimg
+            docker buildx build --push --platform linux/amd64,linux/arm64 --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> .
 
 workflows:
   workflow:
