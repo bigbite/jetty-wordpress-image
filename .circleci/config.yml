@@ -1,7 +1,7 @@
 version: 2.1
 
-# orbs:
-#   docker-image-extend: bigbite/docker-image-extend@0.0.2
+orbs:
+  docker-image-extend: bigbite/docker-image-extend@0.0.2
 
 parameters:
   docker_image_build:
@@ -42,9 +42,7 @@ jobs:
           version: 20.10.14
       - run:
           name: Create multiarch build
-          command: |
-            docker buildx create --use cimg
-            docker buildx build --push --platform linux/amd64,linux/arm64 --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> .
+          command: docker buildx build --push --platform linux/amd64,linux/arm64 --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> .
 
 workflows:
   workflow:
