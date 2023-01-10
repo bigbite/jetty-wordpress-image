@@ -19,6 +19,8 @@ parameters:
 
 jobs:
   build-docker-image:
+    docker:
+      - image: cimg/base:current
     steps:
       - run:
           name: Create multiarch build
