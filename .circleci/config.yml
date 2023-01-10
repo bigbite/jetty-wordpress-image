@@ -29,12 +29,25 @@ workflows:
               ignore: /.*/
             tags:
               only: /.*/
-      - docker-image-extend/build:
-          docker_image_repo: '<< pipeline.parameters.docker_image_repo >>'
-          docker_image_tag: '<< pipeline.parameters.docker_image_tag >>'
-          docker_image_args: '<< pipeline.parameters.docker_image_args >>'
-          docker_image_build: '<< pipeline.parameters.docker_image_build >>'
+      - run:
+          name: Create multiarch build
+          command: |
+            docker buildx build \
+              --push \
+              --platform linux/amd64,linux/arm64 \
+              --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> \
+              .
           context: bigbite
           filters:
             tags:
               ignore: /.*/
+
+      # - docker-image-extend/build:
+      #     docker_image_repo: '<< pipeline.parameters.docker_image_repo >>'
+      #     docker_image_tag: '<< pipeline.parameters.docker_image_tag >>'
+      #     docker_image_args: '<< pipeline.parameters.docker_image_args >>'
+      #     docker_image_build: '<< pipeline.parameters.docker_image_build >>'
+      #     context: bigbite
+      #     filters:
+      #       tags:
+      #         ignore: /.*/
