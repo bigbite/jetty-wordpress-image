@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  docker-image-extend: bigbite/docker-image-extend@0.0.2
+  docker-image-extend: bigbite/docker-image-extend@0.0.9
 
 parameters:
   docker_image_build:
@@ -17,20 +17,6 @@ parameters:
     type: string
     default: 'false'
 
-jobs:
-  build-docker-image:
-    docker:
-      - image: cimg/base:current
-    steps:
-      - setup_remote_docker:
-          version: 20.10.14
-      - run:
-          name: Create multiarch build
-          command: |
-            docker context create cimg
-            docker buildx create --use cimg
-            docker buildx build --push --platform linux/amd64,linux/arm64 --tag << pipeline.parameters.docker_image_repo >>:<< pipeline.parameters.docker_image_tag >> .
-
 workflows:
   workflow:
     jobs:
@@ -43,7 +29,11 @@ workflows:
               ignore: /.*/
             tags:
               only: /.*/
-      - build-docker-image:
+      - docker-image-extend/build:
+          docker_image_repo: '<< pipeline.parameters.docker_image_repo >>'
+          docker_image_tag: '<< pipeline.parameters.docker_image_tag >>'
+          docker_image_args: '<< pipeline.parameters.docker_image_args >>'
+          docker_image_build: '<< pipeline.parameters.docker_image_build >>'
           context: bigbite
           filters:
             tags:
