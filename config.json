@@ -1,3 +1,11 @@
 [
-    { "tag": "6.1-php8.1", "args": { "WORDPRESS_IMAGE": "6.1-php8.1" } }
+    { "tag": "6.1-php8.1", "args": { "WORDPRESS_IMAGE": "6.1-php8.1" } },
+    { "tag": "6.1-php8.0", "args": { "WORDPRESS_IMAGE": "6.1-php8.0" } },
+    { "tag": "6.1-php7.4", "args": { "WORDPRESS_IMAGE": "6.1-php7.4" } },
+    { "tag": "6.0-php8.1", "args": { "WORDPRESS_IMAGE": "6.0-php8.1" } },
+    { "tag": "6.0-php8.0", "args": { "WORDPRESS_IMAGE": "6.0-php8.0" } },
+    { "tag": "6.0-php7.4", "args": { "WORDPRESS_IMAGE": "6.0-php7.4" } },
+    { "tag": "5.9-php8.1", "args": { "WORDPRESS_IMAGE": "5.9-php8.1" } },
+    { "tag": "5.9-php8.0", "args": { "WORDPRESS_IMAGE": "5.9-php8.0" } },
+    { "tag": "5.9-php7.4", "args": { "WORDPRESS_IMAGE": "5.9-php7.4" } }
 ]
